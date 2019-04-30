@@ -340,7 +340,7 @@ function onParcelleClicked(event) {
 function entrerDansParcelle(sonCode) {
 	codeParcelle = sonCode;
 	data_parcelle = null;
-	$.getJSON("https://app.dvf.etalab.gouv.fr/api/parcelles/" + codeParcelle + "/from=" + dateMin.replace(new RegExp("/", "g"), "-") + '&to=' + dateMax.replace(new RegExp("/", "g"), "-"),
+	$.getJSON("api/parcelles/" + codeParcelle + "/from=" + dateMin.replace(new RegExp("/", "g"), "-") + '&to=' + dateMax.replace(new RegExp("/", "g"), "-"),
 		function (data) {
 			data_parcelle = data;
 
@@ -420,7 +420,7 @@ function entrerDansSection(sonCode) {
 			}
 		),
 		// Charge les mutations
-		$.getJSON("https://app.dvf.etalab.gouv.fr/api/mutations/" + codeCommune + "/" + sonCode + "/from=" + dateMin.replace(new RegExp("/", "g"), "-") + '&to=' + dateMax.replace(new RegExp("/", "g"), "-") ,
+		$.getJSON("api/mutations/" + codeCommune + "/" + sonCode + "/from=" + dateMin.replace(new RegExp("/", "g"), "-") + '&to=' + dateMax.replace(new RegExp("/", "g"), "-") ,
 			function (data) {
 				data_section = data;
 				data_dvf = data.donnees;
@@ -692,7 +692,7 @@ function toggleLeftBar() {
 	);
 
 	// Chargement des contours des départements
-	$.getJSON("https://app.dvf.etalab.gouv.fr/donneesgeo/departements-100m.geojson",
+	$.getJSON("donneesgeo/departements-100m.geojson",
 		function (data) {
 			departements = data
 			map.getSource('departements').setData(departements)
@@ -700,7 +700,7 @@ function toggleLeftBar() {
 	)
 
 	// On récupère la plage des mutations de la base
-	$.getJSON("https://app.dvf.etalab.gouv.fr/api/dates",
+	$.getJSON("api/dates",
 		function (data) {
 			dateMin = (new Date(data.min)).toLocaleDateString('fr-FR');
 			dateMax = (new Date(data.max)).toLocaleDateString('fr-FR');
