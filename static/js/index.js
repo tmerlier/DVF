@@ -81,7 +81,12 @@ var vue = new Vue({
 
 var map = null;
 var mapLoaded = false;
-var hoveredStateId = null;
+var hoverIds = {
+	departements: null,
+	communes: null,
+	sections: null,
+	parcelles: null,
+}
 var selectedStateId = null;
 var codeDepartement = null;
 var codeCommune = null;
@@ -250,26 +255,29 @@ function fit(geosjon) {
 function onMouseMove(event, source) {
 	var canvas = map.getCanvas()
 	canvas.style.cursor = 'pointer'
+	var hoveredStateId = hoverIds[source]
 
 	if (event.features.length > 0) {
+
 		if (hoveredStateId !== null) {
-			hoverableSources.map(function(source) {
-				map.setFeatureState({ source, id: hoveredStateId }, { hover: false }); // clean all sources to prevent error
-			})
+			map.setFeatureState({ source, id: hoveredStateId }, { hover: false });
 		}
-		hoveredStateId = event.features[0].id;
-		map.setFeatureState({ source, id: hoveredStateId }, { hover: true });
+
+		hoverIds[source] = event.features[0].id;
+		map.setFeatureState({ source, id: hoverIds[source] }, { hover: true });
 	}
 }
 
 function onMouseLeave(event, source) {
 	var canvas = map.getCanvas()
 	canvas.style.cursor = ''
+	var hoveredStateId = hoverIds[source]
 
 	if (hoveredStateId !== null) {
 		map.setFeatureState({ source, id: hoveredStateId }, { hover: false });
 	}
-	hoveredStateId = null;
+
+	hoverIds[source] = null;
 }
 
 function selectionnerDepartement() {
