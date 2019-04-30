@@ -114,7 +114,7 @@ var fillLayerPaint = {
 	"fill-outline-color": ["case",
 		["boolean", ["feature-state", "selected"], false],
 		"#ff8FD8",
-		"#627BC1"
+		"#000099"
 	],
 	"fill-opacity": ["case",
 		["boolean", ["feature-state", "hover"], false],
